@@ -23,7 +23,6 @@ player_move_right = [1, 0]
 player_move_up = [0, -1]
 player_move_left = [-1, 0]
 
-
 playing = True
 while playing:
     FPS.tick(300)
