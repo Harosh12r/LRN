@@ -32,7 +32,10 @@ def create_enemy():
     enemy_move = [-1, 0]
     return enemy, enemy_rect, enemy_move
 
-CREATE_ENEMY = pygame.USEREVENT +1
+CREATE_ENEMY = pygame.USEREVENT + 1
+pygame.time.set_timer(CREATE_ENEMY, 1500)
+
+enemies = []
 
 playing = True
 while playing:
@@ -40,6 +43,8 @@ while playing:
     for event in pygame.event.get():
         if event.type == QUIT:
             playing = False
+        if event.type == CREATE_ENEMY:
+            enemies.append(create_enemy())
 
     main_display.fill(COLOR_BLACK)
 
@@ -57,9 +62,14 @@ while playing:
     if keys[K_LEFT] and player_rect.left > 0:
         player_rect = player_rect.move(player_move_left)
 
-    enemy_rect = enemy_rect.move(enemy_move)
+    for enemy in enemies:
+        enemy[1] = enemy[1].move(enemy[2])
+
+    #enemy_rect = enemy_rect.move(enemy_move)
 
     main_display.blit(player, player_rect)
-    main_display.blit(enemy, enemy_rect)
+    #main_display.blit(enemy, enemy_rect)
+
+    print(len(enemies))
 
     pygame.display.flip()
